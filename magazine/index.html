@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DeepBoost Beauty Journal | Yunth</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Jost:wght@400;500&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho+B1:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#3a2c2b; --sub:#7a6663; --line:#ecd9d4;
+  --paper:#fdf8f5; --blush:#f8e7e3; --rose:#c0766b; --rose-deep:#a85f56; --cream:#fffdfb;
+  --clean:#3f9a60; --plasma:#9d55bb; --boost:#3a82c0; --lift:#cc4b3c; --mask:#d98a35;
+  --jp:"Noto Sans JP",sans-serif; --min:"Shippori Mincho B1",serif; --it:"Cormorant Garamond",serif; --en:"Jost",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--jp);font-size:16px;line-height:2;letter-spacing:.06em;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit}
+.pc{display:inline}.sp{display:none}
+@media (max-width:767px){.pc{display:none}.sp{display:inline}}
+.wrap{max-width:1120px;margin:0 auto;padding:0 40px}
+@media (max-width:767px){.wrap{padding:0 20px}}
+.it{font-family:var(--it);font-style:italic;font-weight:500;letter-spacing:.02em}
+
+/* ================= COVER ================= */
+.cover{position:relative;background:var(--blush);overflow:hidden;padding:34px 0 70px}
+.mast{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:1px solid var(--ink);padding-bottom:14px}
+.mast .logo{height:64px;width:auto}
+.mast .ttl{font-family:var(--it);font-style:italic;font-size:30px;line-height:1;letter-spacing:.04em;margin-left:18px}
+.mast .brand{display:flex;align-items:flex-end}
+.mast .vol{font-family:var(--en);font-size:12px;letter-spacing:.24em;text-align:right;line-height:1.8}
+.cover-grid{display:grid;grid-template-columns:1fr 500px 1fr;gap:30px;align-items:center;margin-top:34px}
+.cover-head{grid-column:1/-1;text-align:center}
+.cover-head .kicker{font-family:var(--min);font-size:18px;letter-spacing:.2em;color:var(--rose-deep)}
+.cover-head h1{font-family:var(--min);font-weight:600;font-size:clamp(40px,5.2vw,68px);line-height:1.35;letter-spacing:.12em;margin-top:6px}
+.stage{position:relative;height:680px}
+.stage .circle{position:absolute;left:50%;top:50%;width:480px;height:480px;margin:-240px 0 0 -240px;border-radius:50%;background:var(--cream)}
+.stage .glow{position:absolute;left:50%;top:50%;width:520px;height:520px;margin:-260px 0 0 -260px;border-radius:50%;background:radial-gradient(circle,var(--led,var(--lift)) 0%,transparent 60%);opacity:.18;transition:background .9s}
+.stage .case{position:absolute;left:4%;bottom:70px;height:400px;width:auto}
+.dev{position:absolute;right:14%;bottom:0;height:680px;width:auto}
+.dev img{height:100%;width:auto}
+.dev .head{position:absolute;inset:0;clip-path:inset(0 0 87.5% 0);transition:filter .9s}
+.badge{position:absolute;left:-10px;top:60px;width:132px;height:132px;border-radius:50%;background:var(--rose);color:#fff;display:grid;place-content:center;text-align:center;font-family:var(--min);font-size:15px;line-height:1.5;letter-spacing:.1em}
+.badge b{display:block;font-family:var(--it);font-style:italic;font-weight:600;font-size:40px;line-height:1;letter-spacing:0}
+.lines{list-style:none;display:grid;gap:26px}
+.lines li a{display:block;text-decoration:none}
+.lines .no{font-family:var(--it);font-style:italic;font-size:19px;color:var(--rose-deep)}
+.lines .t{display:block;font-family:var(--min);font-weight:600;font-size:18.5px;line-height:1.6;letter-spacing:.08em}
+.lines .s{display:block;font-size:13px;color:var(--sub);line-height:1.7;margin-top:2px}
+.lines.r{text-align:right}
+.led-now{grid-column:1/-1;display:flex;justify-content:center;align-items:center;gap:14px;font-family:var(--en);font-size:13px;letter-spacing:.2em;margin-top:6px}
+.led-now i{width:9px;height:9px;border-radius:50%;background:var(--c);opacity:.25;transition:opacity .4s,transform .4s}
+.led-now i.on{opacity:1;transform:scale(1.35)}
+.led-now span{min-width:15em;text-align:left;color:var(--sub)}
+@media (max-width:900px){
+  .cover{padding:20px 0 50px}
+  .mast .logo{height:40px}
+  .mast .ttl{font-size:19px;margin-left:10px}
+  .mast .vol{font-size:10px;letter-spacing:.16em}
+  .cover-grid{grid-template-columns:1fr 1fr;gap:18px 16px;margin-top:22px}
+  .cover-head .kicker{font-size:14px}
+  .cover-head h1{font-size:33px;letter-spacing:.1em}
+  .stage{grid-column:1/-1;height:480px;order:2}
+  .stage .circle{width:300px;height:300px;margin:-150px 0 0 -150px}
+  .stage .glow{width:380px;height:380px;margin:-190px 0 0 -190px}
+  .stage .case{height:260px;left:6%;bottom:40px}
+  .dev{height:480px;right:16%}
+  .badge{width:100px;height:100px;font-size:12px;left:0;top:20px}
+  .badge b{font-size:30px}
+  .lines{order:3;gap:14px;grid-column:1/-1}
+  .lines.r{order:4;text-align:left;margin-top:-4px}
+  .lines .t{font-size:15.5px}
+  .lines .s{display:none}
+  .led-now{order:5;font-size:11px;gap:10px}
+  .led-now span{min-width:0}
+}
+
+/* ================= common ================= */
+section{padding:120px 0}
+@media (max-width:767px){section{padding:80px 0}}
+.sec-head{text-align:center}
+.sec-head .it{font-size:26px;color:var(--rose-deep)}
+.sec-head h2{font-family:var(--min);font-weight:600;font-size:clamp(28px,3.4vw,40px);line-height:1.6;letter-spacing:.12em;margin-top:4px}
+.sec-head p{margin-top:22px;color:var(--sub);font-size:15.5px}
+@media (max-width:767px){.sec-head .it{font-size:21px}.sec-head h2{font-size:25px}.sec-head p{font-size:14.5px;text-align:left}}
+
+/* ================= contents ================= */
+.contents{background:var(--cream)}
+.toc{max-width:760px;margin:60px auto 0;list-style:none;counter-reset:toc}
+.toc a{display:grid;grid-template-columns:90px 1fr auto;align-items:baseline;gap:18px;padding:22px 0;border-bottom:1px dashed var(--line);text-decoration:none}
+.toc .n{font-family:var(--it);font-style:italic;font-size:38px;line-height:1;color:var(--rose)}
+.toc .t{font-family:var(--min);font-weight:600;font-size:20px;letter-spacing:.08em;line-height:1.6}
+.toc .t small{display:block;font-family:var(--jp);font-weight:400;font-size:13px;color:var(--sub);letter-spacing:.06em}
+.toc .dots{display:flex;gap:5px}
+.toc .dots i{width:11px;height:11px;border-radius:50%;background:var(--c)}
+@media (max-width:767px){
+  .toc a{grid-template-columns:52px 1fr;gap:4px 12px;padding:18px 0}
+  .toc .n{font-size:28px;grid-row:1/3}
+  .toc .t{font-size:16px}
+  .toc .dots{grid-column:2}
+}
+
+/* ================= modes ================= */
+.mode-row{display:grid;grid-template-columns:repeat(5,1fr);gap:24px;margin-top:64px}
+.mc{text-align:center}
+.mc .ring{width:150px;height:150px;margin:0 auto;border-radius:50%;padding:6px;background:var(--c)}
+.mc .ring img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:4px solid var(--paper)}
+.mc h3{margin-top:20px;font-family:var(--en);font-weight:500;font-size:19px;letter-spacing:.2em;color:var(--c)}
+.mc .led{font-size:13px;color:var(--sub)}
+.mc .fx{font-family:var(--min);font-weight:600;font-size:20px;letter-spacing:.1em;margin-top:6px}
+.mc .when{font-size:13px;color:var(--sub);line-height:1.8;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+@media (max-width:900px){
+  .mode-row{grid-template-columns:repeat(2,1fr);gap:36px 16px}
+  .mc:last-child{grid-column:1/-1;max-width:50%;margin:0 auto}
+  .mc .ring{width:120px;height:120px}
+  .mc h3{font-size:16px}
+  .mc .fx{font-size:17px}
+}
+
+/* ================= case (scene) ================= */
+.case-sec{position:relative}
+.case-sec:nth-of-type(odd){background:var(--blush)}
+.case-sec:nth-of-type(even){background:var(--cream)}
+.case-top{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:end}
+.case-no{font-family:var(--it);font-style:italic;font-weight:500;font-size:30px;color:var(--rose-deep);line-height:1}
+.case-no b{font-weight:600;font-size:110px;margin-left:8px;letter-spacing:0}
+.case-sec h2{font-family:var(--min);font-weight:600;font-size:clamp(28px,3.4vw,42px);line-height:1.55;letter-spacing:.12em;margin-top:18px}
+.voice{position:relative;background:var(--cream);border-radius:28px;padding:26px 30px;font-family:var(--min);font-size:19px;line-height:1.9;letter-spacing:.08em}
+.case-sec:nth-of-type(even) .voice{background:var(--blush)}
+.voice::after{content:"";position:absolute;left:44px;bottom:-16px;border:9px solid transparent;border-top:16px solid var(--cream);border-bottom:0}
+.case-sec:nth-of-type(even) .voice::after{border-top-color:var(--blush)}
+.voice small{display:block;font-family:var(--jp);font-size:14px;color:var(--sub);letter-spacing:.06em;margin-top:8px;line-height:1.8}
+.case-meta{margin-top:44px;display:grid;grid-template-columns:1fr auto;gap:30px;align-items:start;padding:26px 0;border-top:1px solid var(--ink);border-bottom:1px solid var(--line)}
+.case-meta dt{font-family:var(--it);font-style:italic;font-size:19px;color:var(--rose-deep)}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.tags li{list-style:none;font-size:13.5px;padding:4px 14px;border:1px solid var(--line);border-radius:999px;background:var(--cream);letter-spacing:.04em;line-height:1.7}
+.case-sec:nth-of-type(even) .tags li{background:var(--paper)}
+.use-dots{display:flex;gap:8px;margin-top:10px}
+.use-dots span{font-family:var(--en);font-size:11px;letter-spacing:.14em;font-weight:500;color:#fff;background:var(--c);border-radius:999px;padding:4px 12px 3px}
+@media (max-width:900px){
+  .case-top{grid-template-columns:1fr;gap:34px}
+  .case-no{font-size:22px}.case-no b{font-size:76px}
+  .case-sec h2{font-size:25px}
+  .voice{font-size:16px;padding:20px 22px;border-radius:22px}
+  .case-meta{grid-template-columns:1fr;gap:18px;margin-top:36px}
+  .tags li{font-size:12.5px;padding:3px 12px}
+}
+
+/* tabs */
+.tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:50px 0 10px}
+.tabs button{appearance:none;border:1px solid var(--ink);background:transparent;border-radius:999px;padding:10px 24px;font-family:var(--jp);font-size:14px;letter-spacing:.08em;cursor:pointer;color:var(--ink);line-height:1.5}
+.tabs button span{font-family:var(--it);font-style:italic;font-size:16px;margin-right:8px;color:var(--rose-deep)}
+.tabs button[aria-selected="true"]{background:var(--ink);color:#fff}
+.tabs button[aria-selected="true"] span{color:#f1c9c1}
+.tab-title{text-align:center;font-family:var(--min);font-weight:600;font-size:22px;letter-spacing:.1em;margin-top:24px}
+@media (max-width:767px){.tabs button{padding:8px 16px;font-size:13px}.tab-title{font-size:18px}}
+
+/* how-to grid */
+.howto{margin-top:60px}
+.howto-h{display:flex;align-items:center;gap:18px;margin-bottom:34px}
+.howto-h .it{font-size:30px;color:var(--rose-deep)}
+.howto-h::after{content:"";flex:1;height:1px;background:var(--line)}
+.steps{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:40px 26px}
+.card{position:relative;text-align:center}
+.card .pic{position:relative;width:100%;aspect-ratio:1/1;border-radius:50%;overflow:hidden;background:#fdf1f1}
+.card .pic img{width:100%;height:100%;object-fit:cover;transform:scale(1.2)}
+.card .num{position:absolute;left:-4px;top:-4px;z-index:1;width:46px;height:46px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-family:var(--it);font-style:italic;font-size:22px;line-height:1}
+.card .role{margin-top:14px;font-size:12px;font-weight:700;letter-spacing:.22em;color:var(--rose-deep)}
+.card .nm{font-family:var(--min);font-weight:600;font-size:16px;line-height:1.6;letter-spacing:.06em;margin-top:2px}
+.card .nm small{display:block;font-family:var(--jp);font-weight:400;font-size:11.5px;color:var(--sub)}
+.card .opt{display:inline-block;margin-top:6px;font-size:12px;color:var(--sub);border-bottom:1px solid var(--rose)}
+/* mode card */
+.card.m .pic{background:var(--c);padding:6px}
+.card.m .pic img{border-radius:50%;transform:none;border:4px solid var(--paper)}
+.card.m .num{background:var(--c)}
+.card.m .mname{margin-top:14px;font-family:var(--en);font-weight:500;font-size:18px;letter-spacing:.2em;color:var(--c)}
+.card.m .mfx{font-size:12.5px;color:var(--sub)}
+/* group */
+.grp{grid-column:span var(--span,4);border:2px solid var(--c);border-radius:36px;padding:30px 30px 34px;position:relative;background:color-mix(in srgb,var(--c) 5%,var(--cream))}
+.grp-h{position:absolute;left:50%;top:0;transform:translate(-50%,-50%);white-space:nowrap;background:var(--c);color:#fff;border-radius:999px;padding:6px 22px;font-size:13.5px;letter-spacing:.08em}
+.grp-h b{font-family:var(--en);font-weight:500;letter-spacing:.2em;margin-right:10px}
+.grp .inner{display:flex;gap:18px;align-items:flex-start;margin-top:10px}
+.grp .inner>.card{flex:1;min-width:0}
+.grp .gnote{margin-top:20px;font-size:13.5px;line-height:1.8;background:#fff;border-radius:16px;padding:12px 18px;border:1px dashed var(--rose)}
+.grp .gnote b,.card .cap b{font-family:var(--it);font-style:italic;font-weight:600;font-size:17px;color:var(--rose-deep);margin-right:10px}
+.card .cap{margin-top:12px;text-align:left;font-size:12.5px;line-height:1.7;background:#fff;border-radius:14px;padding:10px 14px;border:1px dashed var(--lift)}
+.card .cap b{color:var(--lift)}
+.grp .card .num{display:none}
+.grp .plus{flex:0 0 22px;align-self:center;height:28px;position:relative;margin-top:-60px}
+.grp .plus::before,.grp .plus::after{content:"";position:absolute;left:50%;top:50%;width:22px;height:2px;margin:-1px 0 0 -11px;background:var(--c)}
+.grp .plus::after{transform:rotate(90deg)}
+.grp .gnum{position:absolute;left:-4px;top:-4px}
+.grp .gnum .num{position:static;display:grid;width:46px;height:46px;border-radius:50%;background:var(--c);color:#fff;place-items:center;font-family:var(--it);font-style:italic;font-size:22px}
+/* choice */
+.choice{grid-column:1/-1;background:var(--cream);border-radius:36px;padding:34px 30px;position:relative}
+.case-sec:nth-of-type(even) .choice{background:var(--paper)}
+.choice .ch-h{text-align:center;font-family:var(--min);font-weight:600;font-size:19px;letter-spacing:.1em}
+.choice .ch-h span{display:block;font-family:var(--jp);font-weight:400;font-size:13px;color:var(--sub);letter-spacing:.06em}
+.choice .inner{display:grid;grid-template-columns:repeat(4,1fr);gap:26px;margin-top:24px}
+.choice .card .num{display:none}
+.choice .gnum{position:absolute;left:-4px;top:-4px}
+.choice .gnum .num{position:static;display:grid;width:46px;height:46px;border-radius:50%;background:var(--ink);color:#fff;place-items:center;font-family:var(--it);font-style:italic;font-size:22px}
+/* editor's note */
+.memo{grid-column:1/-1;display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center;background:#fff;border-radius:20px;padding:20px 26px;border:1px dashed var(--rose);font-size:14.5px;line-height:1.9}
+.memo .lbl{font-family:var(--it);font-style:italic;font-size:22px;color:var(--rose-deep);line-height:1.1;text-align:center}
+.memo .lbl small{display:block;font-family:var(--en);font-style:normal;font-size:10px;letter-spacing:.24em;color:var(--sub)}
+.memo.warn{border-color:var(--lift)}
+.memo.warn .lbl{color:var(--lift)}
+@media (max-width:900px){
+  .howto{margin-top:44px}
+  .howto-h .it{font-size:24px}
+  .steps{grid-template-columns:repeat(2,1fr);gap:30px 16px}
+  .card .num,.grp .gnum .num,.choice .gnum .num{width:38px;height:38px;font-size:18px}
+  .card .nm{font-size:14px}
+  .card.m .mname{font-size:15px}
+  .grp{grid-column:1/-1;padding:30px 14px 24px;border-radius:26px}
+  .grp-h{font-size:11.5px;padding:5px 14px;white-space:normal;width:max-content;max-width:88%;text-align:center;line-height:1.5}
+  .grp .inner{gap:10px}
+  .grp .plus{flex-basis:16px;margin-top:-50px}
+  .grp .plus::before,.grp .plus::after{width:14px;margin-left:-7px}
+  .choice{padding:30px 14px 24px;border-radius:26px}
+  .choice .ch-h{font-size:16px}
+  .choice .inner{grid-template-columns:repeat(2,1fr);gap:22px 14px}
+  .card.w{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:0 16px;align-items:center;text-align:left}
+  .card.w .pic{grid-row:1/4}
+  .card.w .mname{margin-top:0;align-self:end}
+  .card.w .cap{align-self:start}
+  .memo{grid-template-columns:1fr;gap:6px;padding:16px 18px;font-size:13.5px}
+  .memo .lbl{text-align:left}
+  .memo .lbl small{display:inline;margin-left:8px}
+}
+
+/* ================= chart ================= */
+.chart{max-width:900px;margin:60px auto 0;width:100%;border-collapse:separate;border-spacing:0;background:var(--cream);border-radius:24px;overflow:hidden}
+.chart th,.chart td{padding:20px 10px;text-align:center;border-bottom:1px dashed var(--line)}
+.chart tr:last-child th,.chart tr:last-child td{border-bottom:0}
+.chart thead th{font-family:var(--en);font-weight:500;font-size:13px;letter-spacing:.16em;color:var(--c);background:#fff}
+.chart tbody th{text-align:left;padding-left:26px;font-family:var(--min);font-weight:600;font-size:16px;letter-spacing:.06em}
+.chart tbody th a{text-decoration:none}
+.chart tbody th span{font-family:var(--it);font-style:italic;color:var(--rose-deep);margin-right:12px;font-size:19px}
+.chart td i{display:inline-block;width:18px;height:18px;border-radius:50%;background:var(--c)}
+.chart td.off::after{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--line)}
+@media (max-width:767px){
+  .chart{border-radius:16px}
+  .chart th,.chart td{padding:14px 2px}
+  .chart thead th{font-size:9px;letter-spacing:.04em}
+  .chart tbody th{padding-left:12px;font-size:12px;line-height:1.5}
+  .chart tbody th span{display:block;font-size:15px;margin:0}
+  .chart td i{width:13px;height:13px}
+}
+
+/* ================= end ================= */
+.notes{padding:0 0 100px}
+.notes ul{max-width:900px;margin:0 auto;list-style:none;font-size:13.5px;color:var(--sub);line-height:1.9}
+.notes li{padding:8px 0 8px 1.2em;position:relative}
+.notes li::before{content:"";position:absolute;left:0;top:1.05em;width:5px;height:5px;border-radius:50%;background:var(--rose)}
+.outro{background:var(--blush);text-align:center;padding:110px 0 60px}
+.outro .it{font-size:26px;color:var(--rose-deep)}
+.outro p{font-family:var(--min);font-weight:600;font-size:clamp(24px,2.8vw,34px);line-height:1.8;letter-spacing:.12em;margin-top:10px}
+.outro a{display:inline-flex;align-items:center;gap:16px;margin-top:40px;padding:20px 60px;border-radius:999px;background:var(--ink);color:#fff;text-decoration:none;font-size:16px;letter-spacing:.2em;transition:background .3s}
+.outro a::after{content:"";width:7px;height:7px;border-top:1.5px solid currentColor;border-right:1.5px solid currentColor;transform:rotate(45deg)}
+.outro a:hover{background:var(--rose-deep)}
+.outro .logo{height:34px;width:auto;margin:80px auto 0;opacity:.7}
+@media (max-width:767px){.outro{padding:80px 0 50px}.outro p{font-size:21px}.outro a{padding:17px 44px;font-size:15px}}
+
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .8s ease,transform .8s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<!-- ================= COVER ================= -->
+<header class="cover">
+  <div class="wrap">
+    <div class="mast">
+      <div class="brand"><img src="../images/logo.png" alt="Yunth" class="logo"><span class="ttl">Beauty Journal</span></div>
+      <p class="vol">VOL.01<br>DEEPBOOST ISSUE</p>
+    </div>
+    <div class="cover-grid">
+      <div class="cover-head">
+        <p class="kicker">シーン別・DeepBoost 使いかたガイド</p>
+        <h1>美顔器、<br class="sp">今日はどう使う？</h1>
+      </div>
+      <ul class="lines" id="linesL"></ul>
+      <div class="stage">
+        <div class="glow" id="glow"></div>
+        <div class="circle"></div>
+        <img src="../images/case.png" alt="" class="case">
+        <div class="dev">
+          <img src="../images/device.png" alt="Yunth 美顔器 DeepBoost">
+          <img src="../images/device.png" alt="" class="head" id="head" aria-hidden="true">
+        </div>
+        <p class="badge"><span><b>5</b>つのモード<br>使いかた<br>大特集</span></p>
+      </div>
+      <ul class="lines r" id="linesR"></ul>
+      <p class="led-now" id="ledNow" aria-live="polite"></p>
+    </div>
+  </div>
+</header>
+
+<!-- ================= CONTENTS ================= -->
+<section class="contents">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="it">Contents</p>
+      <h2>今日の気分で、<br class="sp">読むページを。</h2>
+    </div>
+    <ol class="toc" id="toc"></ol>
+  </div>
+</section>
+
+<!-- ================= MODES ================= -->
+<section id="modes">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="it">Meet the 5 modes</p>
+      <h2>まずは、5つのモードに<br class="sp">ごあいさつ。</h2>
+      <p>DeepBoostには、光の色がちがう5つのモードがあります。<br class="pc">スキンケアのどのタイミングで使うかが、上手に使うコツです。</p>
+    </div>
+    <div class="mode-row" id="modeRow"></div>
+  </div>
+</section>
+
+<div id="cases"></div>
+
+<!-- ================= CHART ================= -->
+<section id="chart" style="background:var(--paper)">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="it">Quick chart</p>
+      <h2>シーン別・<br class="sp">使うモード早見表</h2>
+    </div>
+    <table class="chart" id="chartTable"></table>
+  </div>
+</section>
+
+<div class="notes">
+  <div class="wrap">
+    <ul>
+      <li>LIFTモードは、PLASMAモードとの併用でいつもよりピリつき感が強く出る場合があります。</li>
+      <li>CLEANモードのあとは肌が濡れた状態です。スクエアシートマスクで満たしたうるおいを肌になじませてから、次のステップへ進んでください。</li>
+      <li>ご使用前に、必ず製品の取扱説明書をお読みください。</li>
+      <li>※1 注釈文言は正式原稿に合わせて差し替え予定です。</li>
+    </ul>
+  </div>
+</div>
+
+<footer class="outro">
+  <div class="wrap">
+    <p class="it">Editor's note</p>
+    <p>毎日の肌に、<br class="sp">ちょうどいいケアを。</p>
+    <a href="#">商品ページへ</a>
+    <img src="../images/logo.png" alt="Yunth" class="logo">
+  </div>
+</footer>
+
+<script>
+const IMG = "../images/";
+const MODES = {
+  clean:  {name:"CLEAN",  led:"緑LED", fx:"透明感※1",     when:"スクエアシートマスクをはさみながら", hue:118},
+  plasma: {name:"PLASMA", led:"紫LED", fx:"なめらか",       when:"洗顔後、スキンケアの前に",           hue:262},
+  boost:  {name:"BOOST",  led:"青LED", fx:"整肌",           when:"導入美容液、もしくは化粧水の後に",     hue:196},
+  lift:   {name:"LIFT",   led:"赤LED", fx:"ハリ／弾力",     when:"化粧水・美容液をなじませたあとに",     hue:0},
+  mask:   {name:"MASK",   led:"橙LED", fx:"ハリ／透明感※1", when:"シートマスクをしながら",               hue:32},
+};
+const ORDER = ["clean","plasma","boost","lift","mask"];
+
+const P = {
+  cleansing:{role:"落とす",    name:"フュージョンクレンジング",     img:"cleansing"},
+  foam:     {role:"洗う",      name:"生VCホワイトクリアフォーム",   img:"foam"},
+  multi:    {role:"満たす",    name:"マルチスクエアシートマスク",   img:"multi-mask"},
+  intro:    {role:"導入美容液",name:"生VC美白美容液", pre:"医薬部外品", img:"serum-intro"},
+  lotion:   {role:"潤す",      name:"生VC美白化粧水", pre:"医薬部外品", img:"lotion"},
+  milk:     {role:"閉じ込める",name:"生VCホワイト乳液",             img:"milk"},
+  cream:    {role:"閉じ込める",name:"生VC美白クリーム", pre:"医薬部外品", img:"cream"},
+  va:       {role:"整える",    name:"生VAダーマ美容液", pre:"医薬部外品", img:"serum-va"},
+  pdrn:     {role:"整える",    name:"生PDRN※1美容液",               img:"serum-pdrn"},
+  az:       {role:"整える",    name:"生AZ美容液",                   img:"serum-az"},
+  mVC:      {role:"満たす",    name:"生ビタミンC※1シートマスク",    img:"mask-vc"},
+  mRet:     {role:"満たす",    name:"生レチノール※1シートマスク",   img:"mask-retinol"},
+  mPdrn:    {role:"満たす",    name:"生PDRN※1シートマスク",         img:"mask-pdrn"},
+  mAze:     {role:"満たす",    name:"生アゼライン酸※1シートマスク", img:"mask-aze"},
+  uv:       {role:"守る",      name:"生VCトーンアップUV", pre:"医薬部外品", img:"uv"},
+  cushion:  {role:"魅せる",    name:"クッションファンデーション",   img:"cushion"},
+};
+const NOTE_CLEAN = "肌が濡れた状態なので、スクエアシートマスクで満たしたうるおいを、肌になじませてから次のステップへ。";
+const NOTE_LIFT  = "LIFTモードはPLASMAモードとの併用で、いつもよりピリつき感が強く出る場合があります。";
+
+const item   = (k, extra={}) => ({t:"item", ...P[k], ...extra});
+const mode   = (m, extra={}) => ({t:"mode", m, ...extra});
+const group  = (m, how, items, extra={}) => ({t:"group", m, how, items, ...extra});
+const choice = (role, note, keys) => ({t:"choice", role, note, items:keys.map(k => P[k])});
+const memo   = (text, warn=false) => ({t:"memo", text, warn});
+const cleanGroup = () => group("clean", "スクエアシートマスクをはさみながら", ["multi"], {note:NOTE_CLEAN});
+const boostGroup = () => group("boost", "導入美容液、もしくは化粧水の後に", ["intro","lotion"]);
+
+const WEEKEND = [
+  {tab:"生ビタミン",   title:"生ビタミンで澄んだ印象の透光肌へ",        serum:null,  mask:"mVC"},
+  {tab:"生レチノール", title:"生レチノールでつるんとなめらかな陶器肌へ", serum:"va",  mask:"mRet"},
+  {tab:"PDRN",         title:"PDRNで毛穴レスな水光肌へ",                serum:"pdrn",mask:"mPdrn"},
+  {tab:"AZ",           title:"AZでさらりと整ったつるさら肌へ",          serum:"az",  mask:"mAze"},
+];
+const weekendSteps = v => [
+  item("cleansing"), item("foam"), cleanGroup(), mode("plasma"), boostGroup(),
+  mode("lift", {warn:NOTE_LIFT}), ...(v.serum ? [item(v.serum)] : []),
+  group("mask", "シートマスクをしながら", [v.mask]), item("milk"), item("cream"),
+];
+
+const SCENES = [
+  { id:"weekend", short:"週末のご褒美ケア", title:"週末は、<br>じっくりご褒美ケア",
+    voice:"忙しい日々が終わり、明日は休日！", voiceSub:"肌も心も、じっくりたっぷりケアしませんか？全5モードの使いかたを一挙にご紹介します。",
+    for:["デート前","勝負日の前","リラックスしたい日","自分のための美容デー"],
+    modes:["clean","plasma","boost","lift","mask"], variants:WEEKEND },
+  { id:"daily", short:"毎日のデイリーケア", title:"毎日の肌に、<br>きちんと向き合う",
+    voice:"大事な予定に向けて、<br class=\"sp\">肌の土台づくりをしたい。", voiceSub:"Yunthのデイリースキンケアに美顔器をプラスして、美肌習慣をつくります。",
+    for:["比較的余裕がある毎晩に","数週間後の大事な予定に向けて","デイリースキンケアを見直したい"],
+    modes:["clean","boost"],
+    steps:[ item("cleansing"), item("foam"), cleanGroup(), boostGroup(),
+      choice("整える", "肌の気分に合わせて、美容液をひとつ。", ["az","pdrn","va"]),
+      choice("満たす", "シートマスクもお好みで選べます。", ["mVC","mAze","mRet","mPdrn"]),
+      item("milk"), item("cream") ] },
+  { id:"quick", short:"クタクタな夜の時短ケア", title:"時間がない日の<br>美容習慣",
+    voice:"今日はもうクタクタ…。<br>でも、毛穴のお手入れはしておきたい。", voiceSub:"頑張った夜の、シンプルスキンケア。",
+    for:["残業続きでもう寝たい","手軽に毛穴ケアをしたい","飲み会帰りですぐ寝たい","ズボラだけど少し頑張りたい"],
+    modes:["plasma","boost"],
+    steps:[ item("cleansing"), item("foam"), mode("plasma"), boostGroup(), item("cream") ] },
+  { id:"hari", short:"元気のない日のハリツヤ", title:"肌に元気がない日の<br>ハリツヤケア",
+    voice:"なんか顔色が悪い、<br class=\"sp\">ハリがない…。", voiceSub:"そんな日におすすめしたいケアです。",
+    for:["顔がどんよりして見える朝","寝起きの顔がすっきりしない","メイクのりがいまいち","写真で顔が冴えなく見える","大切な予定を控えている","季節の変わり目","ハリ・ツヤ不足が気になる"],
+    modes:["clean","lift","mask"],
+    steps:[ item("cleansing"), item("foam"), cleanGroup(), item("intro"), item("lotion"),
+      mode("lift"), item("pdrn"), group("mask", "シートマスクをしながら", ["mPdrn"]), item("milk"), item("cream") ] },
+  { id:"morning", short:"朝肌活モーニングケア", title:"朝肌活！<br>お出かけ前のモーニングケア",
+    voice:"今日はなんだか<br class=\"sp\">肌が冴えない…。", voiceSub:"そんな朝は、美顔器を取り入れて肌を整える時間に。",
+    for:["メイク前","お出かけ前","写真を撮る日","顔の印象をすっきりさせたい日","気分を上げたい日"],
+    modes:["plasma","boost","lift"],
+    steps:[ item("foam"), mode("plasma"), item("multi"), boostGroup(), mode("lift", {warn:NOTE_LIFT}),
+      item("milk"), item("cream", {opt:"乾燥が気になる場合に使用"}), item("uv"), item("cushion") ] },
+];
+
+/* ---------- render ---------- */
+const pad = n => String(n).padStart(2, "0");
+const pname = p => `${p.pre ? `<small>${p.pre}</small>` : ""}${p.name}`;
+const cardItem = (p, n) => `
+  <li class="card">${n ? `<span class="num">${n}</span>` : ""}
+    <div class="pic"><img src="${IMG}p-${p.img}.jpg" alt="" loading="lazy"></div>
+    <p class="role">${p.role}</p><p class="nm">${pname(p)}</p>${p.opt ? `<span class="opt">${p.opt}</span>` : ""}</li>`;
+const cardMode = (m, n, warn) => { const M = MODES[m]; return `
+  <li class="card m${warn ? " w" : ""}" style="--c:var(--${m})">${n ? `<span class="num">${n}</span>` : ""}
+    <div class="pic"><img src="${IMG}head-${m}.jpg" alt="" loading="lazy"></div>
+    <p class="mname">${M.name}</p><p class="mfx">${M.led}／${M.fx}</p>${warn ? `<p class="cap"><b>Caution</b>${warn}</p>` : ""}</li>`; };
+
+function renderSteps(steps){
+  let n = 0;
+  return `<ol class="steps">${steps.map(s => {
+    if (s.t === "item") return cardItem(s, ++n);
+    if (s.t === "mode") return cardMode(s.m, ++n, s.warn);
+    if (s.t === "memo") return `<li class="memo${s.warn ? " warn" : ""}"><p class="lbl">${s.warn ? "Caution" : "Point"}<small>EDITOR'S NOTE</small></p><p>${s.text}</p></li>`;
+    if (s.t === "group") { const M = MODES[s.m]; const subs = s.items.map(k => cardItem(P[k])).join("");
+      return `<li class="grp" style="--c:var(--${s.m});--span:${Math.min(4, s.items.length + 1)}"><div class="gnum"><span class="num">${++n}</span></div>
+        <p class="grp-h"><b>${M.name} MODE</b>${s.how}</p>
+        <ul class="inner" style="list-style:none">${subs}<li class="plus" aria-hidden="true"></li>${cardMode(s.m)}</ul>${s.note ? `<p class="gnote"><b>Point</b>${s.note}</p>` : ""}</li>`; }
+    if (s.t === "choice") return `<li class="choice"><div class="gnum"><span class="num">${++n}</span></div>
+        <p class="ch-h">${s.role}<span>${s.note}</span></p>
+        <ul class="inner" style="list-style:none">${s.items.map(p => cardItem(p)).join("")}</ul></li>`;
+    return "";
+  }).join("")}</ol>`;
+}
+
+function renderCase(sc, i){
+  const body = sc.variants
+    ? `<div class="tabs" role="tablist">${sc.variants.map((v, j) => `<button role="tab" aria-selected="${j === 0}" data-v="${j}"><span>Type ${j + 1}</span>${v.tab}</button>`).join("")}</div>
+       <div id="weekendBody"></div>`
+    : renderSteps(sc.steps);
+  return `
+  <section class="case-sec" id="${sc.id}">
+    <div class="wrap">
+      <div class="case-top reveal">
+        <div><p class="case-no">Case<b>${pad(i + 1)}</b></p><h2>${sc.title}</h2></div>
+        <p class="voice">${sc.voice}<small>${sc.voiceSub}</small></p>
+      </div>
+      <dl class="case-meta reveal">
+        <div><dt>For you, if…</dt><dd><ul class="tags">${sc.for.map(f => `<li>${f}</li>`).join("")}</ul></dd></div>
+        <div><dt>Modes</dt><dd class="use-dots">${sc.modes.map(m => `<span style="--c:var(--${m})">${MODES[m].name}</span>`).join("")}</dd></div>
+      </dl>
+      <div class="howto">
+        <p class="howto-h"><span class="it">How to</span></p>
+        ${body}
+      </div>
+    </div>
+  </section>`;
+}
+
+function renderWeekend(j){
+  const v = WEEKEND[j];
+  document.getElementById("weekendBody").innerHTML = `<p class="tab-title">${v.title}</p><div class="howto" style="margin-top:40px">${renderSteps(weekendSteps(v))}</div>`;
+  document.querySelectorAll("#weekend .tabs button").forEach(b => b.setAttribute("aria-selected", String(+b.dataset.v === j)));
+}
+
+/* ---------- mount ---------- */
+const line = (s, i) => `<li><a href="#${s.id}"><span class="no">Case ${pad(i + 1)}</span><span class="t">${s.short}</span><span class="s">${s.for.slice(0, 2).join("／")}</span></a></li>`;
+document.getElementById("linesL").innerHTML = SCENES.slice(0, 3).map((s, i) => line(s, i)).join("");
+document.getElementById("linesR").innerHTML = SCENES.slice(3).map((s, i) => line(s, i + 3)).join("");
+
+document.getElementById("toc").innerHTML = SCENES.map((s, i) => `
+  <li><a href="#${s.id}"><span class="n">${pad(i + 1)}</span>
+    <span class="t">${s.title.replace(/<br[^>]*>/g, "")}<small>${s.for.slice(0, 3).join("／")}</small></span>
+    <span class="dots">${s.modes.map(m => `<i style="--c:var(--${m})"></i>`).join("")}</span></a></li>`).join("");
+
+document.getElementById("modeRow").innerHTML = ORDER.map(k => { const M = MODES[k]; return `
+  <div class="mc reveal" style="--c:var(--${k})">
+    <div class="ring"><img src="${IMG}head-${k}.jpg" alt="${M.name}モード" loading="lazy"></div>
+    <h3>${M.name}</h3><p class="led">${M.led}</p><p class="fx">${M.fx}</p><p class="when">${M.when}</p>
+  </div>`; }).join("");
+
+document.getElementById("cases").innerHTML = SCENES.map(renderCase).join("");
+renderWeekend(0);
+document.querySelector("#weekend .tabs").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (b) renderWeekend(+b.dataset.v);
+});
+
+document.getElementById("chartTable").innerHTML = `
+  <thead><tr><th></th>${ORDER.map(k => `<th style="--c:var(--${k})">${MODES[k].name}</th>`).join("")}</tr></thead>
+  <tbody>${SCENES.map((s, i) => `<tr><th><a href="#${s.id}"><span>${pad(i + 1)}</span>${s.short}</a></th>
+    ${ORDER.map(k => s.modes.includes(k) ? `<td style="--c:var(--${k})"><i></i></td>` : `<td class="off"></td>`).join("")}</tr>`).join("")}</tbody>`;
+
+/* ---------- cover: LEDカラー切り替え ---------- */
+(() => {
+  const head = document.getElementById("head"), glow = document.getElementById("glow"), now = document.getElementById("ledNow");
+  now.innerHTML = ORDER.map(k => `<i style="--c:var(--${k})"></i>`).join("") + `<span></span>`;
+  const dots = [...now.querySelectorAll("i")], label = now.querySelector("span");
+  let i = ORDER.indexOf("lift");
+  const show = () => {
+    const k = ORDER[i], M = MODES[k];
+    head.style.filter = `hue-rotate(${M.hue}deg)`;
+    glow.style.setProperty("--led", `var(--${k})`);
+    label.textContent = `${M.name} MODE ― ${M.led}`;
+    dots.forEach((d, j) => d.classList.toggle("on", j === i));
+  };
+  show();
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) setInterval(() => { i = (i + 1) % ORDER.length; show(); }, 2600);
+})();
+
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), {threshold:.12});
+document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+</script>
+</body>
+</html>
