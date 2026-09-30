@@ -11,7 +11,7 @@
 :root{
   --ink:#2b2321; --sub:#6f625e; --line:#e4d8d2; --paper:#f7f2ee; --white:#fff;
   --rose:#b5776b; --rose-soft:#f1e3dd; --night:#151110;
-  --clean:#19b04a; --plasma:#b03ad8; --boost:#1a8fe3; --lift:#e7321f; --mask:#f18a10;
+  --clean:#3f9a60; --plasma:#9d55bb; --boost:#3a82c0; --lift:#cc4b3c; --mask:#d98a35;
   --jp:"Noto Sans JP",sans-serif; --en:"Jost",sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -162,8 +162,8 @@ section{padding:130px 0}
 .st.is-mode .n{background:var(--c)!important;border-color:var(--c);color:#fff}
 .box{display:grid;grid-template-columns:120px 1fr;gap:24px;align-items:center;background:var(--white);border:1px solid var(--line);padding:16px 22px 16px 16px}
 .scene:nth-of-type(even) .box{background:var(--paper);border-color:transparent}
-.ph{height:120px;display:grid;place-items:center;background:#fbf7f5}
-.ph img{max-height:104px;max-width:104px;object-fit:contain;mix-blend-mode:multiply}
+.ph{height:120px;background:#fdf4f4;overflow:hidden}
+.ph img{width:100%;height:100%;object-fit:cover;transform:scale(1.25)}
 .role{font-size:12px;font-weight:700;letter-spacing:.2em;color:var(--rose)}
 .nm{font-size:17px;font-weight:500;letter-spacing:.08em;line-height:1.6;margin-top:2px}
 .nm small{display:block;font-size:12px;font-weight:400;color:var(--sub);letter-spacing:.1em}
@@ -171,7 +171,7 @@ section{padding:130px 0}
 /* mode step */
 .is-mode .box{background:var(--night)!important;border-color:var(--night)!important;color:#f3ebe7}
 .is-mode .box .ph{background:#000;overflow:hidden}
-.is-mode .box .ph img,.grp .then .ph img,.mode .pic img{max-width:none;max-height:none;width:100%;height:100%;object-fit:cover;mix-blend-mode:normal}
+.is-mode .box .ph img,.grp .then .ph img,.mode .pic img{max-width:none;max-height:none;width:100%;height:100%;object-fit:cover;mix-blend-mode:normal;transform:none}
 .is-mode .mname{font-family:var(--en);font-size:22px;font-weight:500;letter-spacing:.2em;display:flex;align-items:center;gap:10px}
 .is-mode .mname::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--c)}
 .is-mode .mfx{font-size:14px;color:#c9b8b1;letter-spacing:.1em}
@@ -182,7 +182,6 @@ section{padding:130px 0}
 .grp-h b{font-family:var(--en);font-weight:500;font-size:15px;letter-spacing:.2em}
 .grp .sub{display:grid;grid-template-columns:100px 1fr;gap:20px;align-items:center;padding:12px 18px 0 12px}
 .grp .sub .ph{height:100px}
-.grp .sub .ph img{max-height:86px;max-width:86px}
 .grp .then{margin:12px 18px 0 12px;display:grid;grid-template-columns:100px 1fr;gap:20px;align-items:center;background:var(--night);color:#f3ebe7;padding:0 16px 0 0}
 .grp .then .ph{height:100px;background:#000;overflow:hidden}
 .grp .then .mname{font-family:var(--en);font-size:18px;font-weight:500;letter-spacing:.2em}
@@ -192,10 +191,9 @@ section{padding:130px 0}
 /* choice */
 .choice-note{font-size:14px;color:var(--sub);margin:4px 0 12px}
 .choices{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
-.choices .c{background:var(--white);border:1px solid var(--line);padding:12px;text-align:center}
+.choices .c{background:var(--white);border:1px solid var(--line);padding:0 0 12px;text-align:center}
 .scene:nth-of-type(even) .choices .c{background:var(--paper);border-color:transparent}
-.choices .ph{height:96px;background:transparent}
-.choices .ph img{max-height:90px;max-width:120px}
+.choices .ph{height:auto;aspect-ratio:1/1}
 .choices .nm{font-size:14px;margin-top:8px}
 /* notes */
 .note{margin-top:12px;display:grid;grid-template-columns:auto 1fr;gap:12px;font-size:14px;line-height:1.8;color:var(--ink);background:var(--rose-soft);padding:14px 18px}
@@ -208,13 +206,11 @@ section{padding:130px 0}
   .st .n{width:36px;height:36px;font-size:13px}
   .box{grid-template-columns:84px 1fr;gap:14px;padding:12px 14px 12px 12px}
   .ph{height:88px}
-  .ph img{max-height:76px;max-width:76px}
   .nm{font-size:14.5px;letter-spacing:.04em}
   .is-mode .mname{font-size:18px}
   .grp-h{flex-direction:column;align-items:flex-start;gap:0;padding:8px 14px;font-size:13px}
   .grp .sub,.grp .then{grid-template-columns:76px 1fr;gap:14px}
   .grp .sub .ph,.grp .then .ph{height:78px}
-  .grp .sub .ph img{max-height:66px;max-width:66px}
   .choices{grid-template-columns:repeat(2,1fr)}
   .note{grid-template-columns:1fr;gap:2px;font-size:13.5px}
 }
