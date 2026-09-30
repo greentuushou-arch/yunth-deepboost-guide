@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DeepBoost 使いかたガイド | Yunth</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#2b2321; --sub:#6f625e; --line:#e4d8d2; --paper:#f7f2ee; --white:#fff;
+  --rose:#b5776b; --rose-soft:#f1e3dd; --night:#151110;
+  --clean:#19b04a; --plasma:#b03ad8; --boost:#1a8fe3; --lift:#e7321f; --mask:#f18a10;
+  --jp:"Noto Sans JP",sans-serif; --en:"Jost",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--jp);font-size:16px;line-height:1.95;letter-spacing:.06em;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit}
+.pc{display:inline}.sp{display:none}
+@media (max-width:767px){.pc{display:none}.sp{display:inline}}
+.en{font-family:var(--en);letter-spacing:.14em}
+.wrap{max-width:1180px;margin:0 auto;padding:0 40px}
+@media (max-width:767px){.wrap{padding:0 20px}}
+
+/* ---------- header ---------- */
+.site{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:26px 40px;color:#e9dcd6;font-family:var(--en);font-size:13px;letter-spacing:.24em}
+.site b{font-weight:500;font-size:17px;letter-spacing:.2em}
+@media (max-width:767px){.site{padding:18px 20px;font-size:11px}.site b{font-size:15px}}
+
+/* ---------- FV ---------- */
+.fv{position:relative;background:var(--night);color:#f3ebe7;overflow:hidden;height:clamp(640px,100vh,920px)}
+.fv-mark{position:absolute;left:-.04em;bottom:-.2em;font-family:var(--en);font-weight:600;font-size:clamp(120px,19vw,300px);line-height:1;letter-spacing:.01em;color:#231c1a;white-space:nowrap;user-select:none}
+.fv-glow{position:absolute;width:760px;height:760px;right:calc(22% - 380px);top:-250px;border-radius:50%;background:radial-gradient(circle,var(--led,#e7321f) 0%,transparent 62%);opacity:.42;transition:background .9s}
+.fv-inner{position:relative;z-index:2;display:grid;grid-template-columns:1.15fr .85fr;height:100%;max-width:1180px;margin:0 auto;padding:0 40px}
+.fv-copy{align-self:center;padding:120px 0 150px}
+.fv-kicker{font-size:15px;color:#cdbab3;letter-spacing:.16em;margin-bottom:28px}
+.fv-kicker span:first-child{display:inline-block;width:40px;height:1px;background:#8d7770;vertical-align:middle;margin-right:14px}
+.fv h1{font-size:clamp(34px,3.7vw,50px);font-weight:500;line-height:1.55;letter-spacing:.1em}
+.fv-lead{margin-top:30px;font-size:17px;color:#d8c9c3;line-height:2}
+.fv-mode{margin-top:46px;display:flex;align-items:center;gap:22px}
+.fv-mode .dots{display:flex;gap:10px}
+.fv-mode .dots i{width:10px;height:10px;border-radius:50%;background:#4a3f3c;transition:background .5s,transform .5s}
+.fv-mode .dots i.on{transform:scale(1.4)}
+.fv-mode .now{font-family:var(--en);font-size:15px;letter-spacing:.22em;min-width:14em}
+.fv-mode .now small{display:block;font-family:var(--jp);font-size:13px;letter-spacing:.12em;color:#b9a79f}
+.fv-device{position:relative;align-self:start;justify-self:center;width:clamp(210px,21vw,290px);margin-top:84px}
+.fv-device img{width:100%}
+.fv-device .head{position:absolute;inset:0;clip-path:inset(0 0 87.5% 0);transition:filter .9s}
+@media (max-width:767px){
+  .fv{height:clamp(600px,100svh,720px)}
+  .fv-inner{display:block;padding:0 20px}
+  .fv-copy{max-width:58%}
+  .fv-copy{padding:96px 0 120px}
+  .fv-kicker{font-size:12px;margin-bottom:20px}
+  .fv-kicker span:first-child{width:22px;margin-right:8px}
+  .fv-kicker .pc-i{display:none}
+  .fv h1{font-size:27px;line-height:1.6;letter-spacing:.08em}
+  .fv-lead{font-size:14px;margin-top:20px}
+  .fv-mode{margin-top:32px;flex-direction:column;align-items:flex-start;gap:12px}
+  .fv-mode .now{font-size:13px}
+  .fv-device{position:absolute;right:-18px;top:64px;width:46vw;max-width:200px;margin:0}
+  .fv-glow{width:420px;height:420px;right:-150px;top:-150px}
+  .fv-mark{font-size:92px;bottom:-.16em}
+}
+
+/* ---------- common section ---------- */
+section{padding:130px 0}
+@media (max-width:767px){section{padding:84px 0}}
+.label{font-family:var(--en);font-size:14px;letter-spacing:.3em;color:var(--rose);font-weight:500}
+.h2{font-size:clamp(28px,3.2vw,42px);font-weight:500;line-height:1.6;letter-spacing:.1em;margin-top:14px}
+.intro{margin-top:26px;color:var(--sub);max-width:36em}
+@media (max-width:767px){.h2{font-size:25px}.intro{font-size:15px}}
+
+/* ---------- modes ---------- */
+.modes{background:var(--white)}
+.mode-list{margin-top:70px;display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--line)}
+.mode{padding:36px 22px 30px;border-right:1px solid var(--line)}
+.mode:first-child{border-left:1px solid var(--line)}
+.mode .pic{aspect-ratio:1/1;overflow:hidden;background:#000}
+.mode h3{margin-top:22px;font-family:var(--en);font-weight:500;font-size:22px;letter-spacing:.18em;display:flex;align-items:center;gap:10px}
+.mode h3::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--c)}
+.mode .led{font-size:14px;color:var(--sub);margin-top:4px}
+.mode .fx{font-size:19px;font-weight:500;margin-top:10px;letter-spacing:.1em}
+.mode .when{font-size:13px;color:var(--sub);margin-top:14px;padding-top:14px;border-top:1px solid var(--line);line-height:1.8}
+@media (max-width:900px){
+  .mode-list{grid-template-columns:1fr;border-top:0}
+  .mode,.mode:first-child{display:grid;grid-template-columns:104px 1fr;column-gap:20px;border:0;border-bottom:1px solid var(--line);padding:22px 0}
+  .mode .pic{grid-row:1/6;aspect-ratio:auto;height:128px}
+  .mode h3{margin-top:0;font-size:19px}
+  .mode .fx{font-size:17px;margin-top:2px}
+  .mode .when{border:0;padding:0;margin-top:6px}
+}
+
+/* ---------- scene index ---------- */
+.index-list{margin-top:60px;list-style:none;border-top:1px solid var(--ink)}
+.index-list a{display:grid;grid-template-columns:110px 1fr auto 40px;align-items:center;gap:24px;padding:30px 8px;border-bottom:1px solid var(--line);text-decoration:none;transition:background .3s}
+.index-list a:hover{background:var(--white)}
+.index-list .no{font-family:var(--en);font-size:44px;font-weight:300;letter-spacing:.06em;color:var(--rose);line-height:1}
+.index-list .t{font-size:21px;font-weight:500;letter-spacing:.1em;line-height:1.6}
+.index-list .t small{display:block;font-size:14px;font-weight:400;color:var(--sub);letter-spacing:.06em;margin-top:4px}
+.index-list .arw{width:12px;height:12px;border-right:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);transform:rotate(45deg);justify-self:center}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-family:var(--en);font-size:11px;letter-spacing:.14em;font-weight:500;padding:3px 9px 2px;color:#fff;background:var(--c)}
+@media (max-width:767px){
+  .index-list a{grid-template-columns:56px 1fr 20px;gap:4px 14px;padding:22px 0}
+  .index-list .no{font-size:30px;grid-row:1/3}
+  .index-list .t{font-size:17px}
+  .index-list .t small{font-size:12.5px}
+  .index-list .chips{grid-column:2;grid-row:2}
+  .index-list .arw{grid-column:3;grid-row:1/3;width:9px;height:9px}
+}
+
+/* ---------- scene ---------- */
+.scene{border-top:1px solid var(--line)}
+.scene:nth-of-type(even){background:var(--white)}
+.scene-grid{display:grid;grid-template-columns:380px 1fr;gap:80px;align-items:start}
+.scene-head{position:sticky;top:40px}
+.scene-no{font-family:var(--en);font-weight:300;font-size:120px;line-height:.9;letter-spacing:.02em;color:var(--rose)}
+.scene-no small{font-size:14px;font-weight:500;letter-spacing:.3em;display:block;margin-bottom:12px;color:var(--ink)}
+.scene h2{margin-top:26px;font-size:30px;font-weight:500;line-height:1.6;letter-spacing:.1em}
+.scene .lead{margin-top:20px;color:var(--sub);font-size:16px}
+.for{margin-top:30px;padding-top:22px;border-top:1px solid var(--line)}
+.for dt{font-size:13px;font-weight:700;letter-spacing:.16em}
+.for dd{margin-top:10px;font-size:14.5px;line-height:1.9;color:var(--sub)}
+.for dd li{list-style:none;padding-left:1.1em;position:relative}
+.for dd li::before{content:"";position:absolute;left:0;top:.9em;width:.5em;height:1px;background:var(--rose)}
+.use{margin-top:26px}
+.use p{font-size:13px;font-weight:700;letter-spacing:.16em;margin-bottom:10px}
+@media (max-width:900px){
+  .scene-grid{grid-template-columns:1fr;gap:44px}
+  .scene-head{position:static}
+  .scene-no{font-size:84px}
+  .scene h2{font-size:23px;margin-top:18px}
+  .scene .lead{font-size:15px}
+}
+
+/* tabs (No.1) */
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--ink);margin-bottom:34px}
+.tabs button{appearance:none;border:0;border-right:1px solid var(--ink);background:transparent;font-family:var(--jp);font-size:14px;letter-spacing:.08em;line-height:1.5;padding:14px 8px;cursor:pointer;color:var(--ink)}
+.tabs button:last-child{border-right:0}
+.tabs button span{display:block;font-family:var(--en);font-size:11px;letter-spacing:.2em;color:var(--sub)}
+.tabs button[aria-selected="true"]{background:var(--ink);color:#fff}
+.tabs button[aria-selected="true"] span{color:#cbbab3}
+.tab-title{font-size:21px;font-weight:500;letter-spacing:.1em;margin-bottom:26px}
+@media (max-width:767px){
+  .tabs{grid-template-columns:repeat(2,1fr)}
+  .tabs button:nth-child(2){border-right:0}
+  .tabs button:nth-child(-n+2){border-bottom:1px solid var(--ink)}
+  .tabs button{font-size:13px;padding:12px 6px}
+  .tab-title{font-size:18px}
+}
+
+/* steps */
+.steps{list-style:none;position:relative}
+.steps::before{content:"";position:absolute;left:21px;top:20px;bottom:20px;width:1px;background:var(--line)}
+.st{position:relative;display:grid;grid-template-columns:44px 1fr;gap:22px;padding:14px 0}
+.st .n{position:relative;z-index:1;width:44px;height:44px;border-radius:50%;background:var(--paper);border:1px solid var(--ink);display:grid;place-items:center;font-family:var(--en);font-size:15px;letter-spacing:.04em}
+.scene:nth-of-type(even) .st .n{background:var(--white)}
+.st.is-mode .n{background:var(--c)!important;border-color:var(--c);color:#fff}
+.box{display:grid;grid-template-columns:120px 1fr;gap:24px;align-items:center;background:var(--white);border:1px solid var(--line);padding:16px 22px 16px 16px}
+.scene:nth-of-type(even) .box{background:var(--paper);border-color:transparent}
+.ph{height:120px;display:grid;place-items:center;background:#fbf7f5}
+.ph img{max-height:104px;max-width:104px;object-fit:contain;mix-blend-mode:multiply}
+.role{font-size:12px;font-weight:700;letter-spacing:.2em;color:var(--rose)}
+.nm{font-size:17px;font-weight:500;letter-spacing:.08em;line-height:1.6;margin-top:2px}
+.nm small{display:block;font-size:12px;font-weight:400;color:var(--sub);letter-spacing:.1em}
+.opt{display:inline-block;margin-top:8px;font-size:13px;color:var(--sub);border-bottom:1px solid var(--rose)}
+/* mode step */
+.is-mode .box{background:var(--night)!important;border-color:var(--night)!important;color:#f3ebe7}
+.is-mode .box .ph{background:#000;overflow:hidden}
+.is-mode .box .ph img,.grp .then .ph img,.mode .pic img{max-width:none;max-height:none;width:100%;height:100%;object-fit:cover;mix-blend-mode:normal}
+.is-mode .mname{font-family:var(--en);font-size:22px;font-weight:500;letter-spacing:.2em;display:flex;align-items:center;gap:10px}
+.is-mode .mname::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--c)}
+.is-mode .mfx{font-size:14px;color:#c9b8b1;letter-spacing:.1em}
+.how{margin-top:10px;font-size:14.5px;line-height:1.8;padding-left:12px;border-left:2px solid var(--c)}
+/* group (mode + items) */
+.grp{border:1px solid var(--c);padding:0 0 12px;background:transparent}
+.grp-h{display:flex;align-items:center;gap:14px;background:var(--c);color:#fff;padding:10px 18px;font-size:14px;letter-spacing:.08em}
+.grp-h b{font-family:var(--en);font-weight:500;font-size:15px;letter-spacing:.2em}
+.grp .sub{display:grid;grid-template-columns:100px 1fr;gap:20px;align-items:center;padding:12px 18px 0 12px}
+.grp .sub .ph{height:100px}
+.grp .sub .ph img{max-height:86px;max-width:86px}
+.grp .then{margin:12px 18px 0 12px;display:grid;grid-template-columns:100px 1fr;gap:20px;align-items:center;background:var(--night);color:#f3ebe7;padding:0 16px 0 0}
+.grp .then .ph{height:100px;background:#000;overflow:hidden}
+.grp .then .mname{font-family:var(--en);font-size:18px;font-weight:500;letter-spacing:.2em}
+.grp .then .mfx{font-size:13px;color:#c9b8b1}
+.grp .plus{display:flex;align-items:center;gap:10px;padding:10px 18px 0 12px;font-size:12.5px;color:var(--sub);letter-spacing:.12em}
+.grp .plus::before,.grp .plus::after{content:"";flex:1;height:1px;background:var(--line)}
+/* choice */
+.choice-note{font-size:14px;color:var(--sub);margin:4px 0 12px}
+.choices{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.choices .c{background:var(--white);border:1px solid var(--line);padding:12px;text-align:center}
+.scene:nth-of-type(even) .choices .c{background:var(--paper);border-color:transparent}
+.choices .ph{height:96px;background:transparent}
+.choices .ph img{max-height:90px;max-width:120px}
+.choices .nm{font-size:14px;margin-top:8px}
+/* notes */
+.note{margin-top:12px;display:grid;grid-template-columns:auto 1fr;gap:12px;font-size:14px;line-height:1.8;color:var(--ink);background:var(--rose-soft);padding:14px 18px}
+.note::before{content:"POINT";font-family:var(--en);font-size:11px;font-weight:600;letter-spacing:.2em;color:var(--rose);padding-top:2px}
+.note.warn{background:#fdece8}
+.note.warn::before{content:"CAUTION";color:var(--lift)}
+@media (max-width:767px){
+  .steps::before{left:17px}
+  .st{grid-template-columns:36px 1fr;gap:12px;padding:10px 0}
+  .st .n{width:36px;height:36px;font-size:13px}
+  .box{grid-template-columns:84px 1fr;gap:14px;padding:12px 14px 12px 12px}
+  .ph{height:88px}
+  .ph img{max-height:76px;max-width:76px}
+  .nm{font-size:14.5px;letter-spacing:.04em}
+  .is-mode .mname{font-size:18px}
+  .grp-h{flex-direction:column;align-items:flex-start;gap:0;padding:8px 14px;font-size:13px}
+  .grp .sub,.grp .then{grid-template-columns:76px 1fr;gap:14px}
+  .grp .sub .ph,.grp .then .ph{height:78px}
+  .grp .sub .ph img{max-height:66px;max-width:66px}
+  .choices{grid-template-columns:repeat(2,1fr)}
+  .note{grid-template-columns:1fr;gap:2px;font-size:13.5px}
+}
+
+/* ---------- matrix ---------- */
+.matrix{margin-top:60px;width:100%;border-collapse:collapse;background:var(--white)}
+.matrix th,.matrix td{border-bottom:1px solid var(--line);padding:20px 12px;text-align:center}
+.matrix thead th{font-family:var(--en);font-weight:500;font-size:14px;letter-spacing:.18em;border-bottom:1px solid var(--ink)}
+.matrix thead th i{display:block;width:10px;height:10px;border-radius:50%;background:var(--c);margin:0 auto 8px}
+.matrix tbody th{text-align:left;font-weight:500;font-size:16px;letter-spacing:.08em}
+.matrix tbody th a{text-decoration:none}
+.matrix tbody th span{font-family:var(--en);color:var(--rose);margin-right:14px;font-weight:400}
+.matrix td i{display:inline-block;width:16px;height:16px;border-radius:50%;background:var(--c)}
+.matrix td.off::after{content:"";display:inline-block;width:12px;height:1px;background:#cdbfb9;vertical-align:middle}
+@media (max-width:767px){
+  .matrix th,.matrix td{padding:14px 2px}
+  .matrix thead th{font-size:9.5px;letter-spacing:.06em}
+  .matrix tbody th{font-size:12.5px;letter-spacing:.02em;line-height:1.5}
+  .matrix tbody th span{display:block;margin:0}
+  .matrix td i{width:12px;height:12px}
+}
+
+/* ---------- caution / cta ---------- */
+.caution{background:var(--white);padding:90px 0}
+.caution h2{font-size:22px;font-weight:500;letter-spacing:.12em}
+.caution ul{margin-top:24px;list-style:none;font-size:14.5px;color:var(--sub)}
+.caution li{padding:10px 0 10px 1.2em;border-bottom:1px solid var(--line);position:relative}
+.caution li::before{content:"";position:absolute;left:0;top:23px;width:.5em;height:1px;background:var(--ink)}
+.cta{background:var(--night);color:#f3ebe7;text-align:center;padding:120px 0}
+.cta p{font-size:clamp(22px,2.6vw,32px);font-weight:500;letter-spacing:.12em;line-height:1.7}
+.cta a{display:inline-flex;align-items:center;gap:22px;margin-top:40px;padding:22px 56px;border:1px solid #f3ebe7;text-decoration:none;font-size:16px;letter-spacing:.2em;transition:background .3s,color .3s}
+.cta a::after{content:"";width:8px;height:8px;border-top:1.5px solid currentColor;border-right:1.5px solid currentColor;transform:rotate(45deg)}
+.cta a:hover{background:#f3ebe7;color:var(--night)}
+@media (max-width:767px){.cta{padding:84px 0}.cta p{font-size:21px}.cta a{padding:18px 40px;font-size:15px}}
+footer{background:var(--night);color:#8d7c76;text-align:center;font-family:var(--en);font-size:12px;letter-spacing:.24em;padding:0 0 40px}
+
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .8s ease,transform .8s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.fv-device .head,.fv-glow{transition:none}}
+</style>
+</head>
+<body>
+
+<header class="site"><b>Yunth</b><span>DEEPBOOST GUIDE</span></header>
+
+<!-- ============ FV ============ -->
+<div class="fv" id="top">
+  <div class="fv-glow" id="fvGlow"></div>
+  <div class="fv-mark" aria-hidden="true">DeepBoost</div>
+  <div class="fv-inner">
+    <div class="fv-copy">
+      <p class="fv-kicker"><span></span><span class="pc-i">美顔器 </span>DeepBoost <br class="sp">使いかたガイド</p>
+      <h1>今日の肌に、<br>ちょうどいい<br class="sp">ケアを。</h1>
+      <p class="fv-lead">5つのLEDモードの<br class="sp">使いかたを、<br class="sp">シーン別にご紹介します。</p>
+      <div class="fv-mode" aria-live="polite">
+        <div class="dots" id="fvDots"></div>
+        <p class="now" id="fvNow">LIFT MODE<small>赤LED ／ ハリ・弾力</small></p>
+      </div>
+    </div>
+    <div class="fv-device">
+      <img src="images/device.png" alt="Yunth 美顔器 DeepBoost">
+      <img src="images/device.png" alt="" class="head" id="fvHead" aria-hidden="true">
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODES ============ -->
+<section class="modes" id="modes">
+  <div class="wrap">
+    <p class="label">5 MODES</p>
+    <h2 class="h2">まずは、<br class="sp">5つのモードを知る。</h2>
+    <p class="intro">DeepBoostには、目的の違う5つのLEDモードがあります。<br class="pc">スキンケアの流れの中で、どのタイミングで使うかがポイントです。</p>
+    <div class="mode-list" id="modeList"></div>
+  </div>
+</section>
+
+<!-- ============ INDEX ============ -->
+<section id="scenes">
+  <div class="wrap">
+    <p class="label">SCENE</p>
+    <h2 class="h2">今日は、<br class="sp">どんな日ですか？</h2>
+    <p class="intro">時間のある週末も、クタクタの夜も、出かける前の朝も。<br class="pc">その日の肌と気分に合わせて、使いかたを選んでください。</p>
+    <ol class="index-list" id="indexList"></ol>
+  </div>
+</section>
+
+<div id="sceneRoot"></div>
+
+<!-- ============ MATRIX ============ -->
+<section id="matrix">
+  <div class="wrap">
+    <p class="label">OVERVIEW</p>
+    <h2 class="h2">シーンごとの<br class="sp">使用モード一覧</h2>
+    <table class="matrix" id="matrixTable"></table>
+  </div>
+</section>
+
+<div class="caution">
+  <div class="wrap">
+    <h2>ご使用にあたって</h2>
+    <ul>
+      <li>LIFTモードは、PLASMAモードとの併用でいつもよりピリつき感が強く出る場合があります。</li>
+      <li>CLEANモードのあとは肌が濡れた状態です。スクエアシートマスクで満たしたうるおいを肌になじませてから、次のステップへ進んでください。</li>
+      <li>ご使用前に、必ず製品の取扱説明書をお読みください。</li>
+      <li>※1 注釈文言は正式原稿に合わせて差し替え予定です。</li>
+    </ul>
+  </div>
+</div>
+
+<div class="cta">
+  <div class="wrap">
+    <p>毎日の肌に、<br class="sp">ちょうどいいケアを。</p>
+    <a href="#">商品ページへ</a>
+  </div>
+</div>
+<footer>Yunth</footer>
+
+<script>
+const MODES = {
+  clean:  {name:"CLEAN",  led:"緑LED", fx:"透明感※1",      when:"スクエアシートマスクをはさみながら使用", hue:118},
+  plasma: {name:"PLASMA", led:"紫LED", fx:"なめらか",        when:"洗顔後、スキンケアの前に",               hue:262},
+  boost:  {name:"BOOST",  led:"青LED", fx:"整肌",            when:"導入美容液、もしくは化粧水の後に",         hue:196},
+  lift:   {name:"LIFT",   led:"赤LED", fx:"ハリ／弾力",      when:"化粧水・美容液をなじませたあとに",         hue:0},
+  mask:   {name:"MASK",   led:"橙LED", fx:"ハリ／透明感※1",  when:"シートマスクをしながら使用",               hue:32},
+};
+const ORDER = ["clean","plasma","boost","lift","mask"];
+
+const P = {
+  cleansing:{role:"落とす",   name:"フュージョンクレンジング",        img:"cleansing"},
+  foam:     {role:"洗う",     name:"生VCホワイトクリアフォーム",      img:"foam"},
+  multi:    {role:"満たす",   name:"マルチスクエアシートマスク",      img:"multi-mask"},
+  intro:    {role:"導入美容液",name:"生VC美白美容液", pre:"医薬部外品", img:"serum-intro"},
+  lotion:   {role:"潤す",     name:"生VC美白化粧水", pre:"医薬部外品", img:"lotion"},
+  milk:     {role:"閉じ込める",name:"生VCホワイト乳液",              img:"milk"},
+  cream:    {role:"閉じ込める",name:"生VC美白クリーム", pre:"医薬部外品", img:"cream"},
+  va:       {role:"整える",   name:"生VAダーマ美容液", pre:"医薬部外品", img:"serum-va"},
+  pdrn:     {role:"整える",   name:"生PDRN※1美容液",                 img:"serum-pdrn"},
+  az:       {role:"整える",   name:"生AZ美容液",                      img:"serum-az"},
+  mVC:      {role:"満たす",   name:"生ビタミンC※1シートマスク",      img:"mask-vc"},
+  mRet:     {role:"満たす",   name:"生レチノール※1シートマスク",     img:"mask-retinol"},
+  mPdrn:    {role:"満たす",   name:"生PDRN※1シートマスク",           img:"mask-pdrn"},
+  mAze:     {role:"満たす",   name:"生アゼライン酸※1シートマスク",   img:"mask-aze"},
+  uv:       {role:"守る",     name:"生VCトーンアップUV", pre:"医薬部外品", img:"uv"},
+  cushion:  {role:"魅せる",   name:"クッションファンデーション",      img:"cushion"},
+};
+
+const NOTE_CLEAN = "肌が濡れた状態なので、スクエアシートマスクで満たしたうるおいを、肌になじませてから次のステップへ。";
+const NOTE_LIFT  = "LIFTモードはPLASMAモードとの併用で、いつもよりピリつき感が強く出る場合があります。";
+
+const item  = (k, extra={}) => ({t:"item", ...P[k], ...extra});
+const mode  = (m, extra={}) => ({t:"mode", m, ...extra});
+const group = (m, how, items, extra={}) => ({t:"group", m, how, items, ...extra});
+const choice = (role, note, keys) => ({t:"choice", role, note, items:keys.map(k => P[k])});
+
+const cleanGroup = () => group("clean", "スクエアシートマスクをはさみながら", ["multi"], {note:NOTE_CLEAN});
+const boostGroup = () => group("boost", "導入美容液、もしくは化粧水の後に", ["intro","lotion"]);
+
+const WEEKEND = [
+  {tab:"生ビタミン", title:"生ビタミンで澄んだ印象の透光肌へ",        serum:null,  mask:"mVC"},
+  {tab:"生レチノール", title:"生レチノールでつるんとなめらかな陶器肌へ", serum:"va",  mask:"mRet"},
+  {tab:"PDRN", title:"PDRNで毛穴レスな水光肌へ",                  serum:"pdrn",mask:"mPdrn"},
+  {tab:"AZ", title:"AZでさらりと整ったつるさら肌へ",              serum:"az",  mask:"mAze"},
+];
+const weekendSteps = v => [
+  item("cleansing"), item("foam"), cleanGroup(), mode("plasma"), boostGroup(),
+  mode("lift", {warn:NOTE_LIFT}),
+  ...(v.serum ? [item(v.serum)] : []),
+  group("mask", "シートマスクをしながら", [v.mask]),
+  item("milk"), item("cream"),
+];
+
+const SCENES = [
+  { id:"weekend", title:"週末は、じっくりご褒美ケア", titleBr:"週末は、<br>じっくりご褒美ケア",
+    lead:"忙しい日々が終わり、明日は休日。肌も心も、じっくりたっぷりケアしませんか？全5モードの使いかたを一挙にご紹介します。",
+    for:["デート前","勝負日の前","リラックスしたい日","自分のための美容デー"],
+    modes:["clean","plasma","boost","lift","mask"], variants:WEEKEND },
+  { id:"daily", title:"毎日の肌に、きちんと向き合う", titleBr:"毎日の肌に、<br>きちんと向き合う",
+    lead:"Yunthのデイリースキンケアに、美顔器をプラス。毎日の積み重ねで、美肌習慣の土台をつくります。",
+    for:["仕事をしていても、比較的余裕がある毎晩に","数週間後の大事な予定に向けて、土台づくりをしたい","デイリースキンケアを見直して、美肌習慣をつくりたい"],
+    modes:["clean","boost"],
+    steps:[ item("cleansing"), item("foam"), cleanGroup(), boostGroup(),
+      choice("整える", "肌の気分に合わせて、美容液をひとつ。", ["az","pdrn","va"]),
+      choice("満たす", "シートマスクもお好みで選べます。", ["mVC","mAze","mRet","mPdrn"]),
+      item("milk"), item("cream") ] },
+  { id:"quick", title:"時間がない日の美容習慣", titleBr:"時間がない日の<br>美容習慣",
+    lead:"今日はもうクタクタ…。でも、毛穴のお手入れはしておきたい。頑張った夜の、シンプルスキンケア。",
+    for:["残業続きでもう寝たい、でも肌のコンディションは落としたくない","手軽に毛穴ケアをしたい","飲み会帰りで、すぐに寝たいとき","ズボラだけど、ちょっとスキンケアを頑張りたい"],
+    modes:["plasma","boost"],
+    steps:[ item("cleansing"), item("foam"), mode("plasma"), boostGroup(), item("cream") ] },
+  { id:"hari", title:"肌に元気がない日のハリツヤケア", titleBr:"肌に元気がない日の<br>ハリツヤケア",
+    lead:"なんだか顔色が悪い、ハリがない。そんな日におすすめしたいケアです。",
+    for:["朝、鏡を見て顔がどんよりして見える日","寝起きの顔がすっきりしない日","メイクのりがいまいちに感じる日","写真を撮ったとき、いつもより顔が冴えなく見える日","大切な予定・人に会う予定を控えている日","季節の変わり目など、肌のコンディションが気になる日","肌のハリ・ツヤ不足が気になってきた方"],
+    modes:["clean","lift","mask"],
+    steps:[ item("cleansing"), item("foam"), cleanGroup(), item("intro"), item("lotion"),
+      mode("lift"), item("pdrn"), group("mask", "シートマスクをしながら", ["mPdrn"]), item("milk"), item("cream") ] },
+  { id:"morning", title:"朝肌活！お出かけ前のモーニングケア", titleBr:"朝肌活！<br>お出かけ前の<br>モーニングケア",
+    lead:"今日はなんだか肌が冴えない…。そんな朝は、美顔器を取り入れて肌を整える時間に。",
+    for:["メイク前","お出かけ前","写真を撮る日","顔の印象をすっきりさせたい日","気分を上げたい日"],
+    modes:["plasma","boost","lift"],
+    steps:[ item("foam"), mode("plasma"), item("multi"), boostGroup(),
+      mode("lift", {warn:NOTE_LIFT}), item("milk"), item("cream", {opt:"乾燥が気になる場合に使用"}),
+      item("uv"), item("cushion") ] },
+];
+
+/* ---------- render helpers ---------- */
+const img = k => `images/p-${k}.jpg`;
+const chips = ms => `<div class="chips">${ms.map(m => `<span class="chip" style="--c:var(--${m})">${MODES[m].name}</span>`).join("")}</div>`;
+const pname = p => `${p.pre ? `<small>${p.pre}</small>` : ""}${p.name}`;
+const notes = s => `${s.note ? `<p class="note">${s.note}</p>` : ""}${s.warn ? `<p class="note warn">${s.warn}</p>` : ""}`;
+const pad = n => String(n).padStart(2, "0");
+
+function renderStep(s, n){
+  if (s.t === "item") return `
+    <li class="st"><span class="n">${pad(n)}</span><div>
+      <div class="box"><div class="ph"><img src="${img(s.img)}" alt="" loading="lazy"></div>
+      <div><p class="role">${s.role}</p><p class="nm">${pname(s)}</p>${s.opt ? `<span class="opt">${s.opt}</span>` : ""}</div></div>${notes(s)}
+    </div></li>`;
+  if (s.t === "mode") { const M = MODES[s.m]; return `
+    <li class="st is-mode" style="--c:var(--${s.m})"><span class="n">${pad(n)}</span><div>
+      <div class="box"><div class="ph"><img src="images/head-${s.m}.jpg" alt="" loading="lazy"></div>
+      <div><p class="mname">${M.name}</p><p class="mfx">${M.led} ／ ${M.fx}</p></div></div>${notes(s)}
+    </div></li>`; }
+  if (s.t === "group") { const M = MODES[s.m]; const subs = s.items.map(k => P[k]);
+    return `
+    <li class="st is-mode" style="--c:var(--${s.m})"><span class="n">${pad(n)}</span><div>
+      <div class="grp">
+        <p class="grp-h"><b>${M.name} MODE</b>${s.how}</p>
+        ${subs.map((p, i) => `${i && s.plus ? `<p class="plus">または</p>` : ""}
+          <div class="sub"><div class="ph"><img src="${img(p.img)}" alt="" loading="lazy"></div>
+          <div><p class="role">${p.role}</p><p class="nm">${pname(p)}</p></div></div>`).join("")}
+        <div class="then"><div class="ph"><img src="images/head-${s.m}.jpg" alt="" loading="lazy"></div>
+          <div><p class="mname">${M.name}</p><p class="mfx">${M.led} ／ ${M.fx}</p></div></div>
+      </div>${notes(s)}
+    </div></li>`; }
+  if (s.t === "choice") return `
+    <li class="st"><span class="n">${pad(n)}</span><div>
+      <p class="role">${s.role}</p><p class="choice-note">${s.note}</p>
+      <div class="choices">${s.items.map(p => `<div class="c"><div class="ph"><img src="${img(p.img)}" alt="" loading="lazy"></div><p class="nm">${pname(p)}</p></div>`).join("")}</div>
+    </div></li>`;
+  return "";
+}
+const renderSteps = steps => `<ol class="steps">${steps.map((s, i) => renderStep(s, i + 1)).join("")}</ol>`;
+
+function renderScene(sc, i){
+  const body = sc.variants
+    ? `<div class="tabs" role="tablist">${sc.variants.map((v, j) => `<button role="tab" aria-selected="${j === 0}" data-v="${j}"><span>TYPE ${j + 1}</span>${v.tab}</button>`).join("")}</div>
+       <div id="weekendBody"></div>`
+    : renderSteps(sc.steps);
+  return `
+  <section class="scene" id="${sc.id}">
+    <div class="wrap scene-grid">
+      <div class="scene-head reveal">
+        <p class="scene-no"><small class="en">SCENE</small>${pad(i + 1)}</p>
+        <h2>${sc.titleBr}</h2>
+        <p class="lead">${sc.lead}</p>
+        <dl class="for"><dt>こんな日におすすめ</dt><dd><ul>${sc.for.map(f => `<li>${f}</li>`).join("")}</ul></dd></dl>
+        <div class="use"><p>使用するモード</p>${chips(sc.modes)}</div>
+      </div>
+      <div class="scene-body">${body}</div>
+    </div>
+  </section>`;
+}
+
+function renderWeekend(j){
+  const v = WEEKEND[j];
+  document.getElementById("weekendBody").innerHTML = `<p class="tab-title">${v.title}</p>${renderSteps(weekendSteps(v))}`;
+  document.querySelectorAll("#weekend .tabs button").forEach(b => b.setAttribute("aria-selected", String(+b.dataset.v === j)));
+}
+
+/* ---------- mount ---------- */
+document.getElementById("modeList").innerHTML = ORDER.map(k => { const M = MODES[k]; return `
+  <div class="mode reveal" style="--c:var(--${k})">
+    <div class="pic"><img src="images/head-${k}.jpg" alt="${M.name}モード" loading="lazy"></div>
+    <h3>${M.name}</h3><p class="led">${M.led}</p><p class="fx">${M.fx}</p><p class="when">${M.when}</p>
+  </div>`; }).join("");
+
+document.getElementById("indexList").innerHTML = SCENES.map((s, i) => `
+  <li><a href="#${s.id}"><span class="no">${pad(i + 1)}</span>
+    <span class="t">${s.title}<small>${s.for.slice(0, 2).join("／")}</small></span>
+    ${chips(s.modes)}<span class="arw"></span></a></li>`).join("");
+
+document.getElementById("sceneRoot").innerHTML = SCENES.map(renderScene).join("");
+renderWeekend(0);
+document.querySelector("#weekend .tabs").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (b) renderWeekend(+b.dataset.v);
+});
+
+document.getElementById("matrixTable").innerHTML = `
+  <thead><tr><th></th>${ORDER.map(k => `<th style="--c:var(--${k})"><i></i>${MODES[k].name}</th>`).join("")}</tr></thead>
+  <tbody>${SCENES.map((s, i) => `<tr><th><a href="#${s.id}"><span>${pad(i + 1)}</span>${s.title}</a></th>
+    ${ORDER.map(k => s.modes.includes(k) ? `<td style="--c:var(--${k})"><i></i></td>` : `<td class="off"></td>`).join("")}</tr>`).join("")}</tbody>`;
+
+/* ---------- FV: LEDカラーを5モードで切り替え ---------- */
+(() => {
+  const head = document.getElementById("fvHead"), glow = document.getElementById("fvGlow");
+  const now = document.getElementById("fvNow"), dots = document.getElementById("fvDots");
+  dots.innerHTML = ORDER.map(k => `<i style="--c:var(--${k})"></i>`).join("");
+  const ds = [...dots.children];
+  let i = ORDER.indexOf("lift");
+  const show = () => {
+    const k = ORDER[i], M = MODES[k];
+    head.style.filter = `hue-rotate(${M.hue}deg) saturate(1.1)`;
+    glow.style.setProperty("--led", `var(--${k})`);
+    now.innerHTML = `${M.name} MODE<small>${M.led} ／ ${M.fx.replace("※1", "")}</small>`;
+    ds.forEach((d, j) => { d.classList.toggle("on", j === i); d.style.background = j === i ? `var(--${ORDER[j]})` : ""; });
+  };
+  show();
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) setInterval(() => { i = (i + 1) % ORDER.length; show(); }, 2600);
+})();
+
+/* ---------- reveal ---------- */
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), {threshold:.15});
+document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+</script>
+</body>
+</html>
