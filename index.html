@@ -27,8 +27,9 @@ a{color:inherit}
 
 /* ---------- header ---------- */
 .site{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:26px 40px;color:#e9dcd6;font-family:var(--en);font-size:13px;letter-spacing:.24em}
-.site b{font-weight:500;font-size:17px;letter-spacing:.2em}
-@media (max-width:767px){.site{padding:18px 20px;font-size:11px}.site b{font-size:15px}}
+.site .logo{height:30px;width:auto}
+footer .logo{height:22px;width:auto;margin:0 auto;opacity:.6}
+@media (max-width:767px){.site{padding:18px 20px;font-size:11px}.site .logo{height:24px}}
 
 /* ---------- FV ---------- */
 .fv{position:relative;background:var(--night);color:#f3ebe7;overflow:hidden;height:clamp(640px,100vh,920px)}
@@ -254,7 +255,7 @@ footer{background:var(--night);color:#8d7c76;text-align:center;font-family:var(-
 </head>
 <body>
 
-<header class="site"><b>Yunth</b><span>DEEPBOOST GUIDE</span></header>
+<header class="site"><img src="images/logo-light.png" alt="Yunth" class="logo"><span>DEEPBOOST GUIDE</span></header>
 
 <!-- ============ FV ============ -->
 <div class="fv" id="top">
@@ -326,7 +327,7 @@ footer{background:var(--night);color:#8d7c76;text-align:center;font-family:var(-
     <a href="#">商品ページへ</a>
   </div>
 </div>
-<footer>Yunth</footer>
+<footer><img src="images/logo-light.png" alt="Yunth" class="logo"></footer>
 
 <script>
 const MODES = {
